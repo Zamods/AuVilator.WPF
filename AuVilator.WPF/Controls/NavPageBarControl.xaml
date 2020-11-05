@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="AuVilator.WPF.Controls.NavPageBarControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AuVilator.WPF.Controls"
+             mc:Ignorable="d" 
+             Height="60"
+             x:Name="userControl">
+    <UserControl.Resources>
+        <Brush x:Key="btnBorderColor">Transparent</Brush>
+        <Brush x:Key="btnBackgroundColor">Transparent</Brush>
+        <HorizontalAlignment x:Key="btnHorAlignment">Center</HorizontalAlignment>
+    </UserControl.Resources>
+    <Grid Background="BlueViolet">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="80"/>
+        </Grid.ColumnDefinitions>
+        <!-- Navigation Bar Title -->
+        <TextBlock Text="{Binding NavBarTitle, ElementName=userControl}" Grid.Row="0" Grid.Column="1" FontWeight="Light" HorizontalAlignment="Center" FontSize="30" VerticalAlignment="Center" Foreground="White" />
+        <!-- Navigation Bar Back Button -->
+        <Button Grid.Row="0" Grid.Column="0" BorderBrush="{StaticResource btnBorderColor}" Background="{StaticResource btnBackgroundColor}" Command="{Binding BackNavBtnCommand, ElementName=userControl}" HorizontalAlignment="{StaticResource btnHorAlignment}" >
+            <Image Source="/Assets/NavBar/Back.png" Height="30" Width="40" Visibility="{Binding BackNavBtnVisibility,ElementName=userControl}" />
+        </Button>
+        <!-- Navigation Bar Next Button -->
+        <Button Grid.Row="0" Grid.Column="2" BorderBrush="{StaticResource btnBorderColor}" Background="{StaticResource btnBackgroundColor}"  Command="{Binding NextNavBtnCommand, ElementName=userControl}" HorizontalAlignment="{StaticResource btnHorAlignment}" >
+            <Image Source="/Assets/NavBar/Front.png" Height="30" Width="40" Visibility="{Binding NextNavBtnVisibility, ElementName=userControl}"/>
+        </Button>
+    </Grid>
+</UserControl>

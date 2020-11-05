@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="AuVilator.WPF.Controls.NavPageFooterControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AuVilator.WPF.Controls"
+             mc:Ignorable="d" 
+              Height="30">
+     <Grid Background="BlueViolet">
+        <TextBlock Text="2020 AuVilator" FontWeight="Bold" HorizontalAlignment="Center" FontSize="10" VerticalAlignment="Center" Padding="5" Foreground="White"/>
+    </Grid>
+</UserControl>

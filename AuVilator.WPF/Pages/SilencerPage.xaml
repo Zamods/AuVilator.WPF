@@ -1,0 +1,268 @@
+﻿<Page x:Class="AuVilator.WPF.Pages.SilencerPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:controls="clr-namespace:AuVilator.WPF.Controls" 
+      xmlns:convert="clr-namespace:AuVilator.WPF.Converters"
+      xmlns:p="clr-namespace:AuVilator.WPF.Properties"
+      xmlns:viewModel="clr-namespace:AuVilator.WPF.ViewModels"
+      mc:Ignorable="d" 
+      Title="Silencer" >
+
+    <Page.Resources>
+        <convert:ComboBoxToStringConverter x:Key="ComboBoxToStringConverter"></convert:ComboBoxToStringConverter>
+        <convert:IntToComboBoxConverter x:Key="IntToComboBoxConverter"></convert:IntToComboBoxConverter>
+        <convert:EmptyStringConverter x:Key="EmptyStringConverter"></convert:EmptyStringConverter>
+        <convert:IntToStringConverter x:Key="IntToStringConverter"></convert:IntToStringConverter>
+        <Style x:Key="InputTextBox" TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="FontWeight" Value="Regular"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="HeadingTextBlock" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="12,0,0,0"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Width" Value="330"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+        </Style>
+        <Style x:Key="LabelTextBlock" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5,0,10,0"/>
+        </Style>
+        <Style x:Key="BackGroundRectangle" TargetType="Rectangle">
+            <Setter Property="Fill" Value="BlueViolet"/>
+        </Style>
+        <Style x:Key="InputComboBox" TargetType="ComboBox">
+            <Setter Property="MinWidth" Value="360" />
+            <Setter Property="Width" Value="380" />
+            <Setter Property="Height" Value="35" />
+            <Setter Property="FontWeight" Value="Regular"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style x:Key="SelectorSlider" TargetType="Slider">
+            <Setter Property="Background" Value="BlueViolet"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="TickPlacement" Value="Both"/>
+            <Setter Property="Ticks" Value="0.1"/>
+            <Setter Property="TickFrequency" Value="0.1"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,1,0,1"/>
+            <Setter Property="Width" Value="320" />
+            <Setter Property="MinWidth" Value="300" />
+            <Setter Property="Height" Value="33" />
+            <Setter Property="Maximum" Value="30"/>
+            <Setter Property="Minimum" Value="-30"/>
+        </Style>
+        <Style x:Key="ImageButton" TargetType="Button">
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="Foreground" Value="{x:Null}"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Width" Value="50" />
+            <Setter Property="Height" Value="50" />
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="BorderBrush" Value="{x:Null}"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+        <Style x:Key="InformationTitleTextBlock" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Padding" Value="6"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="BlueViolet"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="Height" Value="30"/>
+        </Style>
+        <Style x:Key="InformationContentTextBlock" TargetType="TextBlock">
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="VerticalAlignment" Value="Stretch"/>
+        </Style>
+        <Style x:Key="InformationCloseButton" TargetType="Button">
+            <Setter Property="FontWeight" Value="DemiBold"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="DarkCyan"/>
+            <Setter Property="Height" Value="30"/>
+        </Style>
+        <Style x:Key="InformationPanel" TargetType="StackPanel">
+            <Setter Property="Visibility" Value="Hidden"/>
+            <Setter Property="Background" Value="LightBlue"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid x:Name="mainPage">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="100"/>
+        </Grid.ColumnDefinitions>
+        <Rectangle Grid.Row="0" Grid.ColumnSpan="4" Style="{StaticResource BackGroundRectangle}"/>
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="AuVilator Alpha" FontSize="14" Style="{StaticResource HeadingTextBlock}" Padding="0" Margin="20,0,0,0" />
+        <!--<control:NavPageBarControl NavBarTitle="{Binding Textee}" NextNavBtnCommand="{Binding GotoPage2Command}" BackNavBtnCommand="{Binding ChangeText}" Grid.Row="0"/>-->
+        <TextBlock Grid.Row="1" Grid.ColumnSpan="3" Text="{x:Static p:Resources.AuVilator_Welcome}" FontSize="26" FontWeight="ExtraLight" VerticalAlignment="Center" Margin="20,0,0,0"/>
+        <Button Grid.Row="1" Grid.Column="3" Style="{StaticResource ImageButton}" Margin="0,0,5,0" Command="{Binding OpenSettings}">
+            <Image Source="/Assets/NavBar/Settings.png" Stretch="UniformToFill" Height="30" Width="30" Margin="-50" />
+        </Button>
+        <Grid Grid.Row="3" Grid.ColumnSpan="4" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition MaxWidth="40" MinWidth="20"/>
+                <ColumnDefinition MaxWidth="380" MinWidth="360"/>
+                <ColumnDefinition MaxWidth="40" MinWidth="30"/>
+                <ColumnDefinition MaxWidth="40" MinWidth="30"/>
+                <ColumnDefinition MaxWidth="380" MinWidth="360"/>
+                <ColumnDefinition MaxWidth="40" MinWidth="20"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <!-- 0 -->
+                <RowDefinition Height="35"/>
+                <!-- 1 -->
+                <RowDefinition Height="35"/>
+                <!-- 2 -->
+                <RowDefinition Height="40"/>
+                <!-- 3 Spacer -->
+                <RowDefinition Height="35"/>
+                <!-- 4 -->
+                <RowDefinition Height="35"/>
+                <!-- 5 -->
+                <RowDefinition Height="35"/>
+                <!-- 6 -->
+                <RowDefinition Height="40"/>
+                <!-- 7 Spacer-->
+                <RowDefinition Height="35"/>
+                <!-- 8 -->
+                <RowDefinition Height="40"/>
+                <!-- 9 Spacer-->
+                <RowDefinition Height="35"/>
+                <!-- 10 -->
+                <RowDefinition Height="Auto"/>
+                <!-- 11 Spacer-->
+            </Grid.RowDefinitions>
+            <!-- File Selection Control Rows 0->2 Column 1 -->
+            <Rectangle Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource BackGroundRectangle}"/>
+            <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                <TextBlock Text="{x:Static p:Resources.FileSelectionTitleText}" Style="{StaticResource HeadingTextBlock}" />
+                <Button Style="{StaticResource ImageButton}" Click="FileSelectionInformationButtonClicked">
+                    <Image Source="/Assets/Information.png" Stretch="UniformToFill" Height="20" Width="20" Margin="-50" />
+                </Button>
+            </StackPanel>
+            <TextBox Grid.Row="1" Grid.Column="1" x:Name="fileSelectTextBox" Text="{Binding SelectedFileName, Converter={StaticResource EmptyStringConverter}, ConverterParameter={x:Static p:Resources.NoFileSelected}}"
+                     IsReadOnly="True" Style="{StaticResource InputTextBox}"/>
+            <Button Grid.Row="2" Grid.Column="1" Content="{x:Static p:Resources.FileSelectionButtonText}" Foreground="White" Background="BlueViolet" BorderBrush="White" BorderThickness="2" HorizontalAlignment="Center" 
+                    Margin="2" Command="{Binding GetFiles}"/>
+            <!-- Information Panel -->
+            <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" x:Name="fileSelectInformationSP" Style="{StaticResource InformationPanel}">
+                <TextBlock Text="{x:Static p:Resources.InformationTitleText}" Style="{StaticResource InformationTitleTextBlock}"/>
+                <ScrollViewer Height="45">
+                    <TextBlock Text="{x:Static p:Resources.SelectFileInformationText}" Style="{StaticResource InformationContentTextBlock}"/>
+                </ScrollViewer>
+                <Button Content="{x:Static p:Resources.InformationCloseButtonText}" Click="FileSelectionInformationButtonClicked" Style="{StaticResource InformationCloseButton}"/>
+            </StackPanel>
+            <!-- Bin Size Selection 0->2 Column 4 -->
+            <Rectangle Grid.Row="0" Grid.RowSpan="3" Grid.Column="4" Style="{StaticResource BackGroundRectangle}"/>
+            <StackPanel Grid.Row="0" Grid.Column="4" Orientation="Horizontal" >
+                <TextBlock Text="{x:Static p:Resources.BinSizeSelectionTitleText}" Style="{StaticResource HeadingTextBlock}" />
+                <Button Style="{StaticResource ImageButton}" Click="BinSizeSelectionInformationButtonClicked">
+                    <Image Source="/Assets/Information.png" Stretch="UniformToFill" Height="20" Width="20" Margin="-50" />
+                </Button>
+            </StackPanel>
+            <ComboBox Grid.Row="1" Grid.Column="4" x:Name="binSizeComboBox" SelectedItem="{Binding BinSize, Mode=TwoWay, Converter={StaticResource IntToComboBoxConverter}}" 
+                      Style="{StaticResource InputComboBox}">
+                <ComboBoxItem>256</ComboBoxItem>
+                <ComboBoxItem>512</ComboBoxItem>
+                <ComboBoxItem>1024</ComboBoxItem>
+                <ComboBoxItem IsSelected="True" IsEnabled="True">2048</ComboBoxItem>
+                <ComboBoxItem>4096</ComboBoxItem>
+                <ComboBoxItem>8192</ComboBoxItem>
+                <ComboBoxItem>16284</ComboBoxItem>
+            </ComboBox>
+            <TextBlock Grid.Row="2" Grid.Column="4"  Text="{Binding SelectedItem, Mode=TwoWay , ElementName=binSizeComboBox, Converter={StaticResource ComboBoxToStringConverter}, ConverterParameter={x:Static p:Resources.BinSizeSelectedLabelText}}" Style="{StaticResource LabelTextBlock}" FontWeight="DemiBold"/>
+            <!-- Information Panel -->
+            <StackPanel Grid.Row="0" Grid.RowSpan="3" Grid.Column="4" x:Name="binSizeSelectionInformationSP" Style="{StaticResource InformationPanel}">
+                <TextBlock Text="{x:Static p:Resources.InformationTitleText}" Style="{StaticResource InformationTitleTextBlock}"/>
+                <ScrollViewer Height="45">
+                    <TextBlock Text="{x:Static p:Resources.BinSizeSelectionInformationText}" Style="{StaticResource InformationContentTextBlock}"/>
+                </ScrollViewer>
+                <Button Content="{x:Static p:Resources.InformationCloseButtonText}" Click="BinSizeSelectionInformationButtonClicked" Style="{StaticResource InformationCloseButton}"/>
+            </StackPanel>
+            <!-- Start Point Selection 4->6 Column 1 -->
+            <Rectangle Grid.Row="4" Grid.RowSpan="3" Grid.Column="1" Style="{StaticResource BackGroundRectangle}"/>
+            <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal" >
+                <TextBlock Text="{x:Static p:Resources.StartAmpPosSelectionTitleText}" Style="{StaticResource HeadingTextBlock}" />
+                <Button Style="{StaticResource ImageButton}" Click="StartAmpPosInformationButtonClicked">
+                    <Image Source="/Assets/Information.png" Stretch="UniformToFill" Height="20" Width="20" Margin="-50" />
+                </Button>
+            </StackPanel>
+            <TextBox Grid.Row="5" Grid.Column="1" x:Name="ampStartPosTextBox" Text="{Binding Value, Mode=TwoWay, ElementName=ampStartPosSlider}" Style="{StaticResource InputTextBox}" InputScope="NumberFullWidth"/>
+            <TextBlock x:Name="ampStartPosTextBoxError" Grid.Row="5" Grid.Column="1" Margin="16,0" VerticalAlignment="Center" Visibility="Hidden"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1" VerticalAlignment="Center">
+                <TextBlock Text="{Binding Minimum, ElementName=ampStartPosSlider, Mode=OneTime}" Style="{StaticResource LabelTextBlock}"/>
+                <Slider x:Name="ampStartPosSlider" ValueChanged="AmpPosSlider_ValueChanged" Value="{Binding StartPositionAmplitude}" Style="{StaticResource SelectorSlider}"/>
+                <TextBlock Text="{Binding Maximum, ElementName=ampStartPosSlider, Mode=OneTime}" Style="{StaticResource LabelTextBlock}" />
+            </StackPanel>
+            <!-- Information Panel -->
+            <StackPanel Grid.Row="4" Grid.RowSpan="3" Grid.Column="1" x:Name="startAmpPosInformationSP" Style="{StaticResource InformationPanel}">
+                <TextBlock Text="{x:Static p:Resources.InformationTitleText}" Style="{StaticResource InformationTitleTextBlock}"/>
+                <ScrollViewer Height="45">
+                    <TextBlock Text="{x:Static p:Resources.StartAmpPosInformationText}" Style="{StaticResource InformationContentTextBlock}"/>
+                </ScrollViewer>
+                <Button Content="{x:Static p:Resources.InformationCloseButtonText}" Click="StartAmpPosInformationButtonClicked" Style="{StaticResource InformationCloseButton}"/>
+            </StackPanel>
+            <!-- End Point Selection 4->6 Column 4 -->
+            <Rectangle Grid.Row="4" Grid.RowSpan="3" Grid.Column="4" Style="{StaticResource BackGroundRectangle}"/>
+            <StackPanel Grid.Row="4" Grid.Column="4" Orientation="Horizontal" >
+                <TextBlock Text="{x:Static p:Resources.EndAmpPosSelectionTitleText}" Style="{StaticResource HeadingTextBlock}" />
+                <Button Style="{StaticResource ImageButton}" Click="EndAmpPosInformationButtonClicked">
+                    <Image Source="/Assets/Information.png" Stretch="UniformToFill" Height="20" Width="20" Margin="-50" />
+                </Button>
+            </StackPanel>
+            <TextBox Grid.Row="5" Grid.Column="4"  x:Name="ampEndPosTextBox" Text="{Binding Value, Mode=TwoWay, ElementName=ampEndPosSlider}" InputScope="NumberFullWidth" Style="{StaticResource InputTextBox}" />
+            <TextBlock x:Name="ampEndPosTextBoxError" Grid.Row="5" Grid.Column="4" Margin="16,0" VerticalAlignment="Center" Visibility="Hidden"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="4" VerticalAlignment="Center">
+                <TextBlock Text="{Binding Minimum, Mode=OneTime, ElementName=ampEndPosSlider}" Style="{StaticResource LabelTextBlock}"/>
+                <Slider x:Name="ampEndPosSlider" ValueChanged="AmpPosSlider_ValueChanged" Value="{Binding EndPositionAmplitude}" Style="{StaticResource SelectorSlider}"/>
+                <TextBlock Text="{Binding Maximum, Mode=OneTime, ElementName=ampEndPosSlider}" Style="{StaticResource LabelTextBlock}" />
+            </StackPanel>
+            <!-- Information Panel -->
+            <StackPanel Grid.Row="4" Grid.RowSpan="3" Grid.Column="4" x:Name="endAmpPosInformationSP" Style="{StaticResource InformationPanel}">
+                <TextBlock Text="{x:Static p:Resources.InformationTitleText}" Style="{StaticResource InformationTitleTextBlock}"/>
+                <ScrollViewer Height="45">
+                    <TextBlock Text="{x:Static p:Resources.EndAmpPosInformationText}" Style="{StaticResource InformationContentTextBlock}"/>
+                </ScrollViewer>
+                <Button Content="{x:Static p:Resources.InformationCloseButtonText}" Click="EndAmpPosInformationButtonClicked" Style="{StaticResource InformationCloseButton}"/>
+            </StackPanel>
+            <Button Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Content="{x:Static p:Resources.RunSilencerButtonText}" VerticalAlignment="Bottom" Padding="10,0,10,0"
+                    HorizontalAlignment="Center" IsEnabled="{Binding IsFileLoaded}" Command="{Binding RunSilencer}" Height="35"/>
+            <Button Grid.Row="8" Grid.Column="3" Grid.ColumnSpan="2" Content="{x:Static p:Resources.Silencer_V_Cancel_Btn}" VerticalAlignment="Bottom" Padding="10,0,10,0"
+                    HorizontalAlignment="Center" IsEnabled="{Binding IsRunning}" Command="{Binding AbortSilencer}" Height="35"/>
+            <TextBlock x:Name="progressText" Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="4" Style="{StaticResource LabelTextBlock}" Foreground="BlueViolet" Height="Auto" />
+            <ProgressBar x:Name="progressBar" Grid.Row="10" Grid.Column="1" Grid.ColumnSpan="4" Height="20" />
+        </Grid>
+        <Image Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Source="/Assets/Logo.png" Height="100" Opacity="0.3" Panel.ZIndex="-1" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="20"/>
+        <controls:NavPageFooterControl Grid.Row="4" Grid.ColumnSpan="4"/>
+    </Grid>
+</Page>
