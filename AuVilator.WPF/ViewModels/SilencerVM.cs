@@ -25,7 +25,13 @@ namespace AuVilator.WPF.ViewModels
         private ResourceGetter _resourceGetter;
         private bool _isFileLoaded;
         private bool _isRunning;
+        /// <summary>
+        /// Its a <typeparamref name="Progress&#60;SilencerProgressModel&#62;"></typeparamref> passed into [AuVilator.Library.Features.Silencer] so application can retreive execution progress and channel it to UI.
+        /// </summary>
         public Progress<SilencerProgressModel> ProgessIndicator { get; set; }
+        /// <summary>
+        /// Its a token passed into [AuVilator.Library.Features.Silencer] so user can cancel the task once executed.
+        /// </summary>
         private CancellationTokenSource cTS { get; set; }
         public double StartPositionAmplitude { get => _silencerM.startPositionAmplitude; set => SetPropertyAndRaise(ref _silencerM.startPositionAmplitude, value, "StartPositionAmplitude"); }
         public double EndPositionAmplitude { get => _silencerM.endPositionAmplitude; set => SetPropertyAndRaise(ref _silencerM.endPositionAmplitude, value, "EndPositionAmplitude"); }
@@ -34,7 +40,19 @@ namespace AuVilator.WPF.ViewModels
         public string SelectedFilePath { get => _silencerM.selectedFilePath; set => SetPropertyAndRaise(ref _silencerM.selectedFilePath, value, "SelectedFilePath"); }
         public string SelectedOutputFileName { get => _silencerM.selectedOutputFileName; set => SetPropertyAndRaise(ref _silencerM.selectedOutputFileName, value, "SelectedOutputFileName"); }
         public string SelectedOutputFilePath { get => _silencerM.selectedOutputFilePath; set => SetPropertyAndRaise(ref _silencerM.selectedOutputFilePath, value, "SelectedOutputFilePath"); }
+        /// <summary>
+        /// Tells the state listeners that user have successfully loaded input file.
+        /// </summary>
+        /// <remarks>
+        /// It will allow user to run silencer and make the button on UI available.
+        /// </remarks>
         public bool IsFileLoaded { get => IsFileSelected(); set => SetPropertyAndRaise(ref _isFileLoaded, value, "IsFileLoaded"); }
+        /// <summary>
+        /// Represents the state of silencer execution.
+        /// </summary>
+        /// <remarks>
+        /// It will change values when user execute the silencer and it is used to allow user to cancel the running task.
+        /// </remarks>
         public bool IsRunning { get => IsFileSelected(); set => SetPropertyAndRaise(ref _isRunning, value, "IsRunning"); }
         public SilencerVM()
         {
@@ -67,6 +85,13 @@ namespace AuVilator.WPF.ViewModels
             });
         }
 
+        /// <summary>
+        /// Resets the fields after application is done running the silencer.
+        /// </summary>
+        /// <remarks>
+        /// It will reset regardless of success or failure of silencing task.
+        /// </remarks>
+        /// <returns>Completed Task.</returns>
         private Task ResetViewModel()
         {
             this.SelectedFileName = null;
